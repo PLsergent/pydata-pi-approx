@@ -1,10 +1,10 @@
 # pydata-pi-approx
 #### Web-based Analysis &amp; Simulation Platforms with React/Redux, Flask, Celery, and Numpy
  
-This project is based on a tutorial from a talk given by James Powell in Pydata event.
+This project is based on a tutorial from a talk given by James Powell during a Pydata event.
 [Here is the video](https://youtu.be/eEXKIp8h0T0)
 
-#### Note to myself:
+### Note to myself:
 - run gulp:
 ```bash
 $ cd frontend
@@ -27,5 +27,5 @@ $ pipenv run python restapi.py
 $ python httpserver.py static/
 ```
 
-#### Todo:
+### Todo:
 - Add graphic representation using bokeh
