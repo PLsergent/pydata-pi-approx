@@ -10,7 +10,8 @@ numpy = "*"
 sympy = "*"
 flask = "*"
 httpie = "*"
-worker = "*"
+celery = {extras = ["redis"],version = "*"}
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"

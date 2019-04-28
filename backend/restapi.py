@@ -1,10 +1,30 @@
 from flask import Flask, request, jsonify
-from algorithm import approx
+from worker import integrate
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+TASKS = {}
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
+def list_tasks():
+    tasks = {task_id: {'ready': task.ready()}
+             for task_id, task in TASKS.items()}
+    return jsonify(tasks)
+
+
+@app.route('/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    response = {'task_id': task_id}
+
+    task = TASKS[task_id]
+    if task.ready():
+        response['result'] = task.get()
+    return jsonify(response)
+
+
+@app.route('/', methods=['PUT'])
 def put_task():
     f = request.json['f']
     a = request.json['a']
@@ -13,9 +33,9 @@ def put_task():
     d = request.json['d']
     size = request.json.get('size', 100)
 
-    response = {
-        'result': approx(f, a, b, c, d, size),
-    }
+    task_id = len(TASKS)
+    TASKS[task_id] = integrate.delay(f, a, b, c, d, size)
+    response = {'result': task_id}
     return jsonify(response)
 
 
